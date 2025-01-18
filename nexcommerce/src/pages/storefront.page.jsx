@@ -1,42 +1,38 @@
-import Grid from '@mui/material/Grid2'
-import { Box } from '@mui/material'
+import { Grid2, Box } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
-  }),
-}));
+}))
 
 export default function StorefrontPage() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid size={8}>
+        <Grid2 container spacing={2}>
+          <Grid2 size={8}>
             <Item>size=8</Item>
-          </Grid>
+          </Grid2>
 
-          <Grid size={4}>
+          <Grid2 size={4}>
             <Item>size=4</Item>
-          </Grid>
+          </Grid2>
 
-          <Grid size={4}>
+          <Grid2 size={4}>
             <Item>size=4</Item>
-          </Grid>
+          </Grid2>
 
-          <Grid size={8}>
+          <Grid2 size={8}>
             <Item>size=8</Item>
-          </Grid>
+          </Grid2>
 
-        </Grid>
+        </Grid2>
 
       </Box>
     </>
