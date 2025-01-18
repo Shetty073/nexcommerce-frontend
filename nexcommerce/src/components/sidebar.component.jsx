@@ -22,7 +22,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   color: theme.palette.common.white,
 }))
 
-export default function SideBar() {
+export default function SideBar({ showSidebar }) {
   const [open, setOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 900)
 
@@ -44,74 +44,76 @@ export default function SideBar() {
 
   return (
     <>
-      {/* Button to open sidebar on mobile */}
-      <IconButton
-        edge='start'
-        color='inherit'
-        aria-label='menu'
-        sx={{ display: { xs: 'block', sm: 'none' } }}
-        onClick={toggleDrawer}
-      >
-        <MenuIcon />
-      </IconButton>
+      {showSidebar && <div>
+        {/* Button to open sidebar on mobile */}
+        <IconButton
+          edge='start'
+          color='inherit'
+          aria-label='menu'
+          sx={{ display: { xs: 'block', sm: 'none' } }}
+          onClick={toggleDrawer}
+        >
+          <MenuIcon />
+        </IconButton>
 
-      {/* Sidebar Drawer (permanent on desktop) */}
-      <Drawer
-        sx={{
-          width: 240,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+        {/* Sidebar Drawer (permanent on desktop) */}
+        <Drawer
+          sx={{
             width: 240,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant={isDesktop ? 'permanent' : 'temporary'}  // Permanent on desktop, temporary on mobile
-        anchor='left'
-        open={open || isDesktop}  // Always open on desktop (>=600px)
-        onClose={toggleDrawer}
-      >
-        <DrawerHeader>
-          <h2>Dashboard</h2>
-          {/* Close button visible only on mobile */}
-          <IconButton
-            onClick={toggleDrawer}
-            sx={{ display: { xs: 'block', sm: 'none' } }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DrawerHeader>
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: 240,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant={isDesktop ? 'permanent' : 'temporary'}  // Permanent on desktop, temporary on mobile
+          anchor='left'
+          open={open || isDesktop}  // Always open on desktop (>=600px)
+          onClose={toggleDrawer}
+        >
+          <DrawerHeader>
+            <h2>Dashboard</h2>
+            {/* Close button visible only on mobile */}
+            <IconButton
+              onClick={toggleDrawer}
+              sx={{ display: { xs: 'block', sm: 'none' } }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DrawerHeader>
 
-        <List>
-          <ListItem component={Link} to='/inventory'>
-            <ListItemText primary='Inventory' />
-          </ListItem>
-          <ListItem component={Link} to='/invoices'>
-            <ListItemText primary='Invoices' />
-          </ListItem>
-          <ListItem component={Link} to='/logistics'>
-            <ListItemText primary='Logistics' />
-          </ListItem>
-          <ListItem component={Link} to='/promotions'>
-            <ListItemText primary='Promotions' />
-          </ListItem>
-          <ListItem component={Link} to='/servicing'>
-            <ListItemText primary='Servicing' />
-          </ListItem>
-        </List>
+          <List>
+            <ListItem component={Link} to='/inventory'>
+              <ListItemText primary='Inventory' />
+            </ListItem>
+            <ListItem component={Link} to='/invoices'>
+              <ListItemText primary='Invoices' />
+            </ListItem>
+            <ListItem component={Link} to='/logistics'>
+              <ListItemText primary='Logistics' />
+            </ListItem>
+            <ListItem component={Link} to='/promotions'>
+              <ListItemText primary='Promotions' />
+            </ListItem>
+            <ListItem component={Link} to='/servicing'>
+              <ListItemText primary='Servicing' />
+            </ListItem>
+          </List>
 
-        <Divider />
+          <Divider />
 
-        <List>
-          <ListItem component={Link} to='/'>
-            <ListItemText primary='Storefront' />
-          </ListItem>
-        </List>
-      </Drawer>
+          <List>
+            <ListItem component={Link} to='/'>
+              <ListItemText primary='Storefront' />
+            </ListItem>
+          </List>
+        </Drawer>
+      </div>}
 
       {/* Main content area */}
       <Box
         sx={{
-          marginLeft: isDesktop ? 24 : 0,  // Push content to the right of the sidebar (on desktop)
+          marginLeft: (isDesktop && showSidebar) ? 24 : 0,  // Push content to the right of the sidebar (on desktop)
           padding: 3,
           transition: 'margin-left 0.3s',  // Smooth transition for margin adjustment
         }}

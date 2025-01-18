@@ -82,7 +82,7 @@ const DrawerList = ({ pages, onClose, onSubmenuOpen, theme }) => (
   </Box>
 )
 
-export default function ResponsiveAppBar() {
+export default function ResponsiveAppBar({ showNavbar }) {
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [submenuAnchorEl, setSubmenuAnchorEl] = useState(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -96,102 +96,104 @@ export default function ResponsiveAppBar() {
   const handleSubmenuClose = () => setSubmenuAnchorEl(null)
 
   return (
-    <AppBar position='static' sx={styles.appBar(theme)}>
-      <Container maxWidth='xl'>
-        <Toolbar disableGutters>
-          {/* Mobile View: Hamburger menu on the left */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }}>
-            <IconButton
-              size='large'
-              aria-label='menu'
-              onClick={toggleDrawer(true)}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-
-          {/* Desktop Logo */}
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='#'
-            sx={{ ...styles.logo(theme), display: { xs: 'none', md: 'flex' } }}
-          >
-            NexCommerce
-          </Typography>
-
-          {/* Mobile Logo */}
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href='#'
-            sx={{
-              ...styles.logo(theme),
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-            }}
-          >
-            NexCommerce
-          </Typography>
-
-          {/* Desktop Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {NAV_PAGES.map((page) => (
-              <Button
-                key={page}
-                onClick={page === 'Products' ? handleSubmenuOpen : (page) => {console.log({page})}}
-                sx={styles.button(theme)}
+    <>
+      {showNavbar && <AppBar position='static' sx={styles.appBar(theme)}>
+        <Container maxWidth='xl'>
+          <Toolbar disableGutters>
+            {/* Mobile View: Hamburger menu on the left */}
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }}>
+              <IconButton
+                size='large'
+                aria-label='menu'
+                onClick={toggleDrawer(true)}
+                color='inherit'
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          {/* User Menu */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='User' src='/static/images/avatar/2.jpg' />
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+            </Box>
+
+            {/* Desktop Logo */}
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Typography
+              variant='h6'
+              noWrap
+              component='a'
+              href='#'
+              sx={{ ...styles.logo(theme), display: { xs: 'none', md: 'flex' } }}
             >
-              {USER_SETTINGS.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={styles.menuItem(theme)}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
+              NexCommerce
+            </Typography>
+
+            {/* Mobile Logo */}
+            <Typography
+              variant='h5'
+              noWrap
+              component='a'
+              href='#'
+              sx={{
+                ...styles.logo(theme),
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+              }}
+            >
+              NexCommerce
+            </Typography>
+
+            {/* Desktop Menu */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {NAV_PAGES.map((page) => (
+                <Button
+                  key={page}
+                  onClick={page === 'Products' ? handleSubmenuOpen : (page) => { console.log({ page }) }}
+                  sx={styles.button(theme)}
+                >
+                  {page}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+            </Box>
 
-      {/* Product Submenu */}
-      <Submenu
-        anchorEl={submenuAnchorEl}
-        onClose={handleSubmenuClose}
-        items={PRODUCT_SUBMENU_ITEMS}
-        theme={theme}
-      />
+            {/* User Menu */}
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt='User' src='/static/images/avatar/2.jpg' />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {USER_SETTINGS.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu} sx={styles.menuItem(theme)}>
+                    <Typography textAlign='center'>{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
 
-      {/* Mobile Drawer */}
-      <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
-        <DrawerList
-          pages={NAV_PAGES}
-          onClose={toggleDrawer(false)}
-          onSubmenuOpen={handleSubmenuOpen}
+        {/* Product Submenu */}
+        <Submenu
+          anchorEl={submenuAnchorEl}
+          onClose={handleSubmenuClose}
+          items={PRODUCT_SUBMENU_ITEMS}
           theme={theme}
         />
-      </Drawer>
-    </AppBar>
+
+        {/* Mobile Drawer */}
+        <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
+          <DrawerList
+            pages={NAV_PAGES}
+            onClose={toggleDrawer(false)}
+            onSubmenuOpen={handleSubmenuOpen}
+            theme={theme}
+          />
+        </Drawer>
+      </AppBar>}
+    </>
   )
 }

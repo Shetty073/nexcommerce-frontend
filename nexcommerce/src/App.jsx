@@ -18,9 +18,9 @@ function App() {
 
   return (
     <ThemeProvider theme={purpleSkyTheme}>
-      {showNavbar && <Navbar />}
+      <Navbar showNavbar={showNavbar} />
 
-      {showSidebar && <SideBar />}
+      <SideBar showSidebar={showSidebar} />
 
     </ThemeProvider>
   )
