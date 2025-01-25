@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Drawer, List, ListItem, ListItemText, Divider, IconButton, Box } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Drawer, List, ListItem, ListItemText, Divider, IconButton, Box, useTheme } from '@mui/material'
+import { Link, useLocation } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import Typography from '@mui/material/Typography'
 import { Routes, Route } from 'react-router-dom'
 import StorefrontPage from '../pages/storefront.page'
 import NotFoundPage from '../pages/notfound.page'
@@ -22,9 +23,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   color: theme.palette.common.white,
 }))
 
+const styles = {
+  logo: (theme) => ({
+    mr: 2,
+    display: 'flex',
+    fontFamily: 'monospace',
+    fontWeight: 700,
+    letterSpacing: '.3rem',
+    color: theme.palette.background.main,
+    textDecoration: 'none',
+  }),
+  menuItem: (theme) => ({
+    color: theme.palette.primary.main,
+  }),
+}
+
 export default function SideBar({ showSidebar }) {
   const [open, setOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 900)
+  const theme = useTheme()
+  const location = useLocation()
 
   // Toggle sidebar state on mobile
   const toggleDrawer = () => {
@@ -50,7 +68,7 @@ export default function SideBar({ showSidebar }) {
           edge='start'
           color='inherit'
           aria-label='menu'
-          sx={{ display: { xs: 'block', sm: 'none' } }}
+          sx={{ marginLeft: 2, display: { xs: 'block', sm: 'block', md: 'none' } }}
           onClick={toggleDrawer}
         >
           <MenuIcon />
@@ -72,7 +90,15 @@ export default function SideBar({ showSidebar }) {
           onClose={toggleDrawer}
         >
           <DrawerHeader>
-            <h2>Dashboard</h2>
+            <Typography
+              variant='h6'
+              noWrap
+              component='a'
+              href='#'
+              sx={{ ...styles.logo(theme) }}
+            >
+              NexCommerce
+            </Typography>
             {/* Close button visible only on mobile */}
             <IconButton
               onClick={toggleDrawer}
@@ -83,19 +109,19 @@ export default function SideBar({ showSidebar }) {
           </DrawerHeader>
 
           <List>
-            <ListItem component={Link} to='/inventory'>
+            <ListItem component={Link} to='/inventory' sx={(location.pathname == '/inventory') ? styles.menuItem(theme) : {}}>
               <ListItemText primary='Inventory' />
             </ListItem>
-            <ListItem component={Link} to='/invoices'>
+            <ListItem component={Link} to='/invoices' sx={(location.pathname == '/invoices') ? styles.menuItem(theme) : {}}>
               <ListItemText primary='Invoices' />
             </ListItem>
-            <ListItem component={Link} to='/logistics'>
+            <ListItem component={Link} to='/logistics' sx={(location.pathname == '/logistics') ? styles.menuItem(theme) : {}}>
               <ListItemText primary='Logistics' />
             </ListItem>
-            <ListItem component={Link} to='/promotions'>
+            <ListItem component={Link} to='/promotions' sx={(location.pathname == '/promotions') ? styles.menuItem(theme) : {}}>
               <ListItemText primary='Promotions' />
             </ListItem>
-            <ListItem component={Link} to='/servicing'>
+            <ListItem component={Link} to='/servicing' sx={(location.pathname == '/servicing') ? styles.menuItem(theme) : {}}>
               <ListItemText primary='Servicing' />
             </ListItem>
           </List>
