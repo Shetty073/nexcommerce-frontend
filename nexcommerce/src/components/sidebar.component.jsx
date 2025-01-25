@@ -9,6 +9,7 @@ import { Routes, Route } from 'react-router-dom'
 import StorefrontPage from '../pages/storefront.page'
 import NotFoundPage from '../pages/notfound.page'
 import InventoryPage from '../pages/management/inventory.page'
+import OrdersPage from '../pages/management/orders.page'
 import InvoicePage from '../pages/management/invoice.page'
 import LogisticsPage from '../pages/management/logistics.page'
 import PromotionsPage from '../pages/management/promotions.page'
@@ -36,6 +37,11 @@ const styles = {
   menuItem: (theme) => ({
     color: theme.palette.primary.main,
   }),
+}
+
+const setActiveNav = (path, location, theme) => {
+  const currentPath = (location.pathname !== '/' && location.pathname.endsWith('/')) ? location.pathname.slice(0, -1) : location.pathname
+  return (currentPath == path) ? styles.menuItem(theme) : {}
 }
 
 export default function SideBar({ showSidebar }) {
@@ -109,19 +115,22 @@ export default function SideBar({ showSidebar }) {
           </DrawerHeader>
 
           <List>
-            <ListItem component={Link} to='/inventory' sx={(location.pathname == '/inventory') ? styles.menuItem(theme) : {}}>
+            <ListItem component={Link} to='/orders' sx={setActiveNav('/orders', location, theme)}>
+              <ListItemText primary='Orders' />
+            </ListItem>
+            <ListItem component={Link} to='/inventory' sx={setActiveNav('/inventory', location, theme)}>
               <ListItemText primary='Inventory' />
             </ListItem>
-            <ListItem component={Link} to='/invoices' sx={(location.pathname == '/invoices') ? styles.menuItem(theme) : {}}>
+            <ListItem component={Link} to='/invoices' sx={setActiveNav('/invoices', location, theme)}>
               <ListItemText primary='Invoices' />
             </ListItem>
-            <ListItem component={Link} to='/logistics' sx={(location.pathname == '/logistics') ? styles.menuItem(theme) : {}}>
+            <ListItem component={Link} to='/logistics' sx={setActiveNav('/logistics', location, theme)}>
               <ListItemText primary='Logistics' />
             </ListItem>
-            <ListItem component={Link} to='/promotions' sx={(location.pathname == '/promotions') ? styles.menuItem(theme) : {}}>
+            <ListItem component={Link} to='/promotions' sx={setActiveNav('/promotions', location, theme)}>
               <ListItemText primary='Promotions' />
             </ListItem>
-            <ListItem component={Link} to='/servicing' sx={(location.pathname == '/servicing') ? styles.menuItem(theme) : {}}>
+            <ListItem component={Link} to='/servicing' sx={setActiveNav('/servicing', location, theme)}>
               <ListItemText primary='Servicing' />
             </ListItem>
           </List>
@@ -139,7 +148,7 @@ export default function SideBar({ showSidebar }) {
       {/* Main content area */}
       <Box
         sx={{
-          marginLeft: (isDesktop && showSidebar) ? 24 : 0,  // Push content to the right of the sidebar (on desktop)
+          marginLeft: (isDesktop && showSidebar) ? 30 : 0,  // Push content to the right of the sidebar (on desktop)
           padding: 3,
           transition: 'margin-left 0.3s',  // Smooth transition for margin adjustment
         }}
@@ -151,6 +160,7 @@ export default function SideBar({ showSidebar }) {
           <Route exact path='/' element={<StorefrontPage />}></Route>
 
           {/* Management routes */}
+          <Route exact path='/orders' element={<OrdersPage />}></Route>
           <Route exact path='/inventory' element={<InventoryPage />}></Route>
           <Route exact path='/invoices' element={<InvoicePage />}></Route>
           <Route exact path='/logistics' element={<LogisticsPage />}></Route>

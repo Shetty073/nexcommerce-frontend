@@ -1,5 +1,5 @@
-import { Grid2, Typography, useTheme } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Grid2, Typography, useTheme, Stack, Divider } from '@mui/material'
+import servicing_header from '../../assets/images/page_headers/servicing_header.svg'
 
 export default function ServicingPage() {
   const theme = useTheme()
@@ -10,21 +10,47 @@ export default function ServicingPage() {
       color: theme.palette.secondary.main,
       textDecoration: 'underline',
       textDecorationStyle: 'dashed',
-    }
+    },
+    headerImage: {
+      height: 60,
+    },
+    headerText: (theme) => ({
+      mr: 2,
+      display: 'flex',
+      fontWeight: 700,
+      letterSpacing: '.3rem',
+      color: theme.palette.primary.main,
+      textDecoration: 'none',
+    }),
   }
 
   return (
-    <Grid2 container spacing={2} direction='column' alignItems='center' margin={2}>
+    <Grid2 container spacing={2} direction='column'>
       {/* Message Section */}
-      <Grid2>
-        <Typography variant='h6'>
-          The Servicing section is under development. Let us take you back to{' '}
-          <Link style={styles.link} to='/'>
-            home
-          </Link>
-          .
-        </Typography>
-      </Grid2>
+      <div>
+        <Stack direction={'row'} justifyContent={'space-between'}>
+          <Stack justifyContent={'flex-end'}>
+            <Typography
+              variant='h3'
+              noWrap
+              component='div'
+              sx={{ ...styles.headerText(theme) }}
+            >
+              Customer service management
+            </Typography>
+
+          </Stack>
+
+          <img src={servicing_header} alt='Customer servicing page header image' style={styles.headerImage} />
+
+        </Stack>
+      </div>
+
+      <Divider />
+
+      <Typography variant='h6'>
+        This page has customer service and support tools required for managing issues raised by customers
+      </Typography>
     </Grid2>
   )
 }

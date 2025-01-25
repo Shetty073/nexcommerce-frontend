@@ -1,7 +1,7 @@
 import { Grid2, Typography, useTheme, Stack, Divider } from '@mui/material'
-import invoices_header from '../../assets/images/page_headers/invoices_header.svg'
+import orders_header from '../../assets/images/page_headers/orders_header.svg'
 
-export default function InvoicePage() {
+export default function OrdersPage() {
   const theme = useTheme()
 
   // Styles
@@ -36,12 +36,12 @@ export default function InvoicePage() {
               component='div'
               sx={{ ...styles.headerText(theme) }}
             >
-              Manage your invoices
+              Track all orders
             </Typography>
 
           </Stack>
 
-          <img src={invoices_header} alt='Invoices page header image' style={styles.headerImage} />
+          <img src={orders_header} alt='Orders page header image' style={styles.headerImage} />
 
         </Stack>
       </div>
@@ -49,7 +49,7 @@ export default function InvoicePage() {
       <Divider />
 
       <Typography variant='h6'>
-        This page has all the invoice tracking and management tools
+        This page has all the order related information
       </Typography>
     </Grid2>
   )

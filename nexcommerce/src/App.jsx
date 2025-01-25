@@ -7,15 +7,17 @@ import { purpleSkyTheme } from './themes/themes'
 
 
 const NAV_ENABLED_ROUTES = ['/']
-const SIDEBAR_ENABLED_ROUTES = ['/inventory', '/invoices', '/logistics', '/promotions', '/servicing']
+const SIDEBAR_ENABLED_ROUTES = ['/orders', '/inventory', '/invoices', '/logistics', '/promotions', '/servicing']
 
 function App() {
   const location = useLocation()
 
-  const showNavbar = NAV_ENABLED_ROUTES.includes(location.pathname)
+  const currentPath = (location.pathname !== '/' && location.pathname.endsWith('/')) ? location.pathname.slice(0, -1) : location.pathname
 
-  const showSidebar = SIDEBAR_ENABLED_ROUTES.includes(location.pathname)
+  const showNavbar = NAV_ENABLED_ROUTES.includes(currentPath)
 
+  const showSidebar = SIDEBAR_ENABLED_ROUTES.includes(currentPath)
+  
   return (
     <ThemeProvider theme={purpleSkyTheme}>
       <Navbar showNavbar={showNavbar} />

@@ -1,5 +1,5 @@
-import { Grid2, Typography, useTheme } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Grid2, Typography, useTheme, Stack, Divider } from '@mui/material'
+import promotions_header from '../../assets/images/page_headers/promotions_header.svg'
 
 export default function PromotionsPage() {
   const theme = useTheme()
@@ -10,21 +10,47 @@ export default function PromotionsPage() {
       color: theme.palette.secondary.main,
       textDecoration: 'underline',
       textDecorationStyle: 'dashed',
-    }
+    },
+    headerImage: {
+      height: 60,
+    },
+    headerText: (theme) => ({
+      mr: 2,
+      display: 'flex',
+      fontWeight: 700,
+      letterSpacing: '.3rem',
+      color: theme.palette.primary.main,
+      textDecoration: 'none',
+    }),
   }
 
   return (
-    <Grid2 container spacing={2} direction='column' alignItems='center' margin={2}>
+    <Grid2 container spacing={2} direction='column'>
       {/* Message Section */}
-      <Grid2>
-        <Typography variant='h6'>
-          The Promotions section is under development. Let us take you back to{' '}
-          <Link style={styles.link} to='/'>
-            home
-          </Link>
-          .
-        </Typography>
-      </Grid2>
+      <div>
+        <Stack direction={'row'} justifyContent={'space-between'}>
+          <Stack justifyContent={'flex-end'}>
+            <Typography
+              variant='h3'
+              noWrap
+              component='div'
+              sx={{ ...styles.headerText(theme) }}
+            >
+              Promotions management
+            </Typography>
+
+          </Stack>
+
+          <img src={promotions_header} alt='Promotions page header image' style={styles.headerImage} />
+
+        </Stack>
+      </div>
+
+      <Divider />
+
+      <Typography variant='h6'>
+        Manage promotional product placements and promo codes across various parts of store front
+      </Typography>
     </Grid2>
   )
 }
