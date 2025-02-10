@@ -1,31 +1,22 @@
-import { useLocation } from 'react-router-dom'
-import './App.css'
-import Navbar from './components/navbar.component'
-import SideBar from './components/sidebar.component'
-import { ThemeProvider } from '@emotion/react'
-import { purpleSkyTheme } from './themes/themes'
-
-
-const NAV_ENABLED_ROUTES = ['/']
-const SIDEBAR_ENABLED_ROUTES = ['/orders', '/inventory', '/invoices', '/logistics', '/promotions', '/servicing']
+import { Routes, Route } from 'react-router';
+import StorefrontPage from './pages/storefront.page';
+import NotFoundPage from './pages/notfound.page';
+import NavBar from './components/navbar.component';
+import Footer from './components/footer.component';
 
 function App() {
-  const location = useLocation()
-
-  const currentPath = (location.pathname !== '/' && location.pathname.endsWith('/')) ? location.pathname.slice(0, -1) : location.pathname
-
-  const showNavbar = NAV_ENABLED_ROUTES.includes(currentPath)
-
-  const showSidebar = SIDEBAR_ENABLED_ROUTES.includes(currentPath)
-  
   return (
-    <ThemeProvider theme={purpleSkyTheme}>
-      <Navbar showNavbar={showNavbar} />
+    <div>
+      <NavBar />
+      
+      <Routes>
+        <Route exact path='/' element={<StorefrontPage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
 
-      <SideBar showSidebar={showSidebar} />
-
-    </ThemeProvider>
-  )
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;

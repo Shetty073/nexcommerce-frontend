@@ -1,40 +1,19 @@
-import not_found from '../assets/images/not_found.svg'
-import { Grid2, Typography, useTheme } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router';
 
 export default function NotFoundPage() {
-  const theme = useTheme()
-
-  // Styles
-  const styles = {
-    link: {
-      color: theme.palette.secondary.main,
-      textDecoration: 'underline',
-      textDecorationStyle: 'dashed',
-    },
-    image: {
-      width: 500,
-      height: 600,
-    },
-  }
-
   return (
-    <Grid2 container spacing={2} direction='column' alignItems='center' margin={2}>
-      {/* Image Section */}
-      <Grid2>
-        <img src={not_found} alt='Page not found' style={styles.image} />
-      </Grid2>
-
-      {/* Message Section */}
-      <Grid2>
-        <Typography variant='h6'>
-          Looks like you are lost. Let us get you back to{' '}
-          <Link style={styles.link} to='/'>
-            home
-          </Link>
-          .
-        </Typography>
-      </Grid2>
-    </Grid2>
-  )
+    <div className='flex flex-col items-center justify-center min-h-screen bg-indigo-50 text-indigo-800 p-6'>
+      <h1 className='text-6xl font-extrabold text-pink-700'>404</h1>
+      <h2 className='text-3xl font-bold mt-4'>Page Not Found</h2>
+      <p className='text-lg mt-2 text-gray-600 text-center max-w-md'>
+        Oops! The page you are looking for doesn’t exist or has been moved.
+      </p>
+      <Link
+        to='/'
+        className='mt-6 px-6 py-3 bg-indigo-800 text-white rounded-lg text-lg font-medium hover:bg-indigo-900 transition-all'
+      >
+        Go Home
+      </Link>
+    </div>
+  );
 }

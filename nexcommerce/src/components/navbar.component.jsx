@@ -1,199 +1,107 @@
-import { useState } from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
-import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
-import { useTheme } from '@mui/material'
-import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import { useState } from 'react';
+import Avvvatars from 'avvvatars-react';
 
-const NAV_PAGES = ['Products', 'Today`s Deals', 'Your Orders']
-const USER_SETTINGS = ['Your Account', 'Your Wish List', 'Logout']
-const PRODUCT_SUBMENU_ITEMS = ['Electronics', 'Fashion', 'Home & Kitchen']
-
-const styles = {
-  appBar: (theme) => ({
-    mb: 2,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    backdropFilter: 'blur(10px)',
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    color: theme.palette.primary.main,
-  }),
-  logo: (theme) => ({
-    mr: 2,
-    display: 'flex',
-    fontFamily: 'monospace',
-    fontWeight: 700,
-    letterSpacing: '.3rem',
-    color: theme.palette.primary.main,
-    textDecoration: 'none',
-  }),
-  button: (theme) => ({
-    my: 2,
-    color: theme.palette.primary.main,
-    display: 'block',
-  }),
-  menuItem: (theme) => ({
-    color: theme.palette.primary.main,
-  }),
-}
-
-const Submenu = ({ anchorEl, onClose, items, theme }) => (
-  <Menu
-    anchorEl={anchorEl}
-    open={Boolean(anchorEl)}
-    onClose={onClose}
-    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-    transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-  >
-    {items.map((item) => (
-      <MenuItem key={item} onClick={onClose} sx={styles.menuItem(theme)}>
-        {item}
-      </MenuItem>
-    ))}
-  </Menu>
-)
-
-const DrawerList = ({ pages, onClose, onSubmenuOpen, theme }) => (
-  <Box role='presentation' onClick={onClose}>
-    <List>
-      {pages.map((page) => (
-        <ListItem key={page} disablePadding>
-          <ListItemButton onClick={page === 'Products' ? onSubmenuOpen : onClose}>
-            <ListItemText primary={page} sx={styles.menuItem(theme)} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-  </Box>
-)
-
-export default function ResponsiveAppBar({ showNavbar }) {
-  const [anchorElUser, setAnchorElUser] = useState(null)
-  const [submenuAnchorEl, setSubmenuAnchorEl] = useState(null)
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const theme = useTheme()
-
-  const toggleDrawer = (isOpen) => () => setDrawerOpen(isOpen)
-
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget)
-  const handleCloseUserMenu = () => setAnchorElUser(null)
-  const handleSubmenuOpen = (event) => setSubmenuAnchorEl(event.currentTarget)
-  const handleSubmenuClose = () => setSubmenuAnchorEl(null)
+export default function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const user = ''; // Replace with actual user data when available
 
   return (
-    <>
-      {showNavbar && <AppBar position='static' sx={styles.appBar(theme)}>
-        <Container maxWidth='xl'>
-          <Toolbar disableGutters>
-            {/* Mobile View: Hamburger menu on the left */}
-            <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }}>
-              <IconButton
-                size='large'
-                aria-label='menu'
-                onClick={toggleDrawer(true)}
-                color='inherit'
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
+    <nav className='bg-indigo-800 shadow-md relative'>
+      <div className='container mx-auto px-4 py-4 flex justify-between items-center'>
+        {/* Left - Brand Logo */}
+        <h1 className='text-2xl font-bold text-white'>NexCommerce</h1>
 
-            {/* Desktop Logo */}
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              href='#'
-              sx={{ ...styles.logo(theme), display: { xs: 'none', md: 'flex' } }}
+        {/* Desktop Menu */}
+        <div className='hidden md:flex space-x-8 items-center'>
+          <div className='relative'>
+            <button
+              className='text-white hover:text-pink-700 transition'
+              onClick={() => setDropdownOpen(!dropdownOpen)}
             >
-              NexCommerce
-            </Typography>
+              Products &#9662;
+            </button>
+            {dropdownOpen && (
+              <div className='absolute left-0 mt-2 w-48 bg-white shadow-md rounded-md p-2 z-50'>
+                <a href='#' className='block px-4 py-2 text-gray-700 hover:bg-indigo-100'>
+                  Category 1
+                </a>
+                <a href='#' className='block px-4 py-2 text-gray-700 hover:bg-indigo-100'>
+                  Category 2
+                </a>
+              </div>
+            )}
+          </div>
+          <a href='#' className='text-white hover:text-pink-700 transition'>
+            Today’s Deals
+          </a>
+          <a href='#' className='text-white hover:text-pink-700 transition'>
+            Your Orders
+          </a>
 
-            {/* Mobile Logo */}
-            <Typography
-              variant='h5'
-              noWrap
-              component='a'
-              href='#'
-              sx={{
-                ...styles.logo(theme),
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-              }}
+          {/* User Info */}
+          {user ? (
+            <div className='flex items-center space-x-2'>
+              <Avvvatars value={user.email} size={40} />
+              <span className='text-white font-medium'>{user.name}</span>
+            </div>
+          ) : (
+            <a href='/login' className='text-pink-700 font-medium hover:text-white transition'>
+              Login
+            </a>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button className='md:hidden text-white text-2xl' onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? '✖' : '☰'}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className='md:hidden bg-indigo-700 text-white p-4 space-y-4'>
+          {/* Mobile Dropdown */}
+          <div>
+            <button
+              className='w-full text-left py-2 flex justify-between items-center'
+              onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
             >
-              NexCommerce
-            </Typography>
-
-            {/* Desktop Menu */}
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {NAV_PAGES.map((page) => (
-                <Button
-                  key={page}
-                  onClick={page === 'Products' ? handleSubmenuOpen : (page) => { console.log({ page }) }}
-                  sx={styles.button(theme)}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            {/* User Menu */}
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title='Open settings'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='User' src='/static/images/avatar/2.jpg' />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {USER_SETTINGS.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu} sx={styles.menuItem(theme)}>
-                    <Typography textAlign='center'>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-
-        {/* Product Submenu */}
-        <Submenu
-          anchorEl={submenuAnchorEl}
-          onClose={handleSubmenuClose}
-          items={PRODUCT_SUBMENU_ITEMS}
-          theme={theme}
-        />
-
-        {/* Mobile Drawer */}
-        <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
-          <DrawerList
-            pages={NAV_PAGES}
-            onClose={toggleDrawer(false)}
-            onSubmenuOpen={handleSubmenuOpen}
-            theme={theme}
-          />
-        </Drawer>
-      </AppBar>}
-    </>
-  )
+              Products
+              <span>{mobileDropdownOpen ? '▲' : '▼'}</span>
+            </button>
+            {mobileDropdownOpen && (
+              <div className='ml-4 space-y-2'>
+                <a href='#' className='block py-2 text-gray-200 hover:text-pink-400 transition'>
+                  Category 1
+                </a>
+                <a href='#' className='block py-2 text-gray-200 hover:text-pink-400 transition'>
+                  Category 2
+                </a>
+              </div>
+            )}
+          </div>
+          <a href='#' className='block py-2 hover:text-pink-700 transition'>
+            Today’s Deals
+          </a>
+          <a href='#' className='block py-2 hover:text-pink-700 transition'>
+            Your Orders
+          </a>
+          <div className='border-t border-white pt-3'>
+            {user ? (
+              <div className='flex items-center space-x-2'>
+                <Avvvatars value={user.email} size={40} />
+                <span className='text-white'>{user.name}</span>
+              </div>
+            ) : (
+              <a href='/login' className='block text-pink-700 font-medium hover:text-white transition'>
+                Login
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
 }
