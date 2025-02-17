@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 
 const products = [
   {
@@ -44,14 +45,17 @@ export default function StorefrontPage() {
         {/* Carousel */}
         <div className='relative w-full h-64 md:h-80 overflow-hidden rounded-lg shadow-lg'>
           {images.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt='Promoted'
-              className={`absolute w-full h-full object-cover transition-opacity duration-700 ${
-                i === carouselIndex ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
+            <Link
+            key={i}
+            to={"#"}>
+              <img
+                src={src}
+                alt='Promoted'
+                className={`absolute w-full h-full object-cover transition-opacity duration-700 ${
+                  i === carouselIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            </Link>
           ))}
         </div>
 

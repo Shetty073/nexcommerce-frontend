@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className='bg-gray-800 text-white py-6 mt-8 absolute bottom-0 w-full'>
+    <footer className='bg-gray-800 text-white py-6 mt-8 sticky top-[100vh] w-full'>
       <div className='container mx-auto text-center'>
         <p>&copy; 2025 NexCommerce. All rights reserved.</p>
         <div className='mt-2 space-x-4'>
