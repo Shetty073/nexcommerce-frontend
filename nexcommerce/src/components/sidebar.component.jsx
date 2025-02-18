@@ -13,8 +13,8 @@ export default function DashboardSidebar({ loc }) {
   return (
     <div className="lg:w-64 w-full bg-indigo-800 text-white lg:h-screen p-4 flex flex-col float-left">
       {/* Hamburger Menu for Mobile */}
-      <div className="lg:hidden flex justify-between items-center mb-6">
-        <button onClick={toggleAccordion} className="text-2xl">
+      <div className="flex justify-between items-center mb-6">
+        <button onClick={toggleAccordion} className="lg:hidden text-2xl">
           <span>{isOpen ? "✕" : "☰"}</span>
         </button>
         <h1 className="text-2xl font-bold text-white">NexCommerce</h1>

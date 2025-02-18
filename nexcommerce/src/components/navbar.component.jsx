@@ -95,7 +95,7 @@ export default function NavBar() {
                 <span className='text-white'>{user.name}</span>
               </div>
             ) : (
-              <a href='/login' className='block text-pink-700 font-medium hover:text-white transition'>
+              <a href='/login' className='block text-pink-500 font-medium hover:text-white transition'>
                 Login
               </a>
             )}
