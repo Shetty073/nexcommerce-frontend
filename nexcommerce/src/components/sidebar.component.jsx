@@ -24,8 +24,8 @@ export default function DashboardSidebar({ loc }) {
       <div className={`lg:block ${isOpen ? 'block' : 'hidden'} flex-grow space-y-4`}>
         <Link to="/org/inventory" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/inventory') ? 'bg-indigo-600' : ''}`}>Inventory</Link>
         <Link to="/org/orders" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/orders') ? 'bg-indigo-600' : ''}`}>Orders</Link>
-        <Link to="/org/invoices" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/invoices') ? 'bg-indigo-600' : ''}`}>Invoices</Link>
         <Link to="/org/logistics" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/logistics') ? 'bg-indigo-600' : ''}`}>Logistics</Link>
+        <Link to="/org/invoices" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/invoices') ? 'bg-indigo-600' : ''}`}>Invoices</Link>
         <Link to="/org/services" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/services') ? 'bg-indigo-600' : ''}`}>Services</Link>
         <Link to="/org/promotions" className={`text-white hover:bg-indigo-600 px-4 py-2 rounded-lg block ${location.pathname.startsWith('/org/promotions') ? 'bg-indigo-600' : ''}`}>Promotions</Link>
       </div>
